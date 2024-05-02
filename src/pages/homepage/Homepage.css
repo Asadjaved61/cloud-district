@@ -1,0 +1,137 @@
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+.hero {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-secondary);
+  /* SVG by https://bootstrapmade.com/demo/Logis/ */
+  background-image: url("../../../public/assets/img/hero-bg.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  padding: 120px 0 60px 0;
+  color: rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+}
+
+.hero h2 {
+  margin-bottom: 20px;
+  padding: 0;
+  font-size: 48px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.hero p {
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+
+.hero .explore-btn {
+  background-image: linear-gradient(
+    to right,
+    #ff512f 0%,
+    #dd2476 51%,
+    #ff512f 100%
+  );
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: #fff;
+  border-radius: 10px;
+  display: inline-block;
+  padding: 10px 30px;
+}
+
+.hero .explore-btn:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.hero form .btn-primary:hover {
+  background-color: #2756ff;
+}
+
+.hero .stats-item {
+  padding: 30px;
+  width: 100%;
+}
+
+.hero .stats-item span {
+  font-size: 32px;
+  display: block;
+  font-weight: 700;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+.hero .stats-item span:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 3px;
+  background: var(--color-primary);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.hero .stats-item p {
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hero .highlight-colour {
+  background-image: radial-gradient(
+    circle 897px at 9% 80.3%,
+    rgba(55, 60, 245, 1) 0%,
+    rgba(234, 161, 15, 0.9) 100.2%
+  );
+}
+
+.footer {
+  background-color: var(--color-secondary);
+  color: #fff;
+  padding: 20px 0;
+}
+
+/*--------------------------------------------------------------
+# Responsive Design
+--------------------------------------------------------------*/
+@media (max-width: 575px) {
+  .hero h2 {
+    font-size: 20px;
+  }
+  .hero-img {
+    display: none;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 991.98px) {
+  .hero {
+    padding: 60x 0 30px 0;
+  }
+
+  .hero h2 {
+    font-size: 20px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 700px) {
+  .hero-img {
+    display: none;
+  }
+}
