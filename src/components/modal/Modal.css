@@ -1,0 +1,32 @@
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.63);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  width: 250px;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -60%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.modal button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}

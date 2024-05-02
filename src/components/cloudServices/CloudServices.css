@@ -1,0 +1,37 @@
+.filter-provider {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background-image: linear-gradient(
+    to right,
+    #ff512f 0%,
+    #dd2476 51%,
+    #ff512f 100%
+  );
+}
+
+.filter-provider h6 {
+  padding: 0;
+}
+
+.services {
+  width: 100%;
+  height: 90vh;
+  overflow: auto;
+}
+
+.service-list {
+  height: 66vh;
+  cursor: pointer;
+}
+
+.service-list .active {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.geo-region {
+  color: #999;
+}
