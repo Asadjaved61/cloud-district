@@ -63,7 +63,7 @@ const Homepage = () => {
                 to='services'
                 spy={true}
                 smooth={true}
-                offset={-50}
+                offset={-80}
                 duration={500}
                 ignoreCancelEvents={false}
               >

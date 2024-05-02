@@ -39,7 +39,7 @@ export const Header = () => {
           <div className='col-lg-5 col-md-5 col-sm-6 d-flex gap-2 flex-wrap text-right justify-content-end align-items-end'>
             <button
               type='submit'
-              className='btn btn-success'
+              className='btn btn-outline-info'
               onClick={() => setIsModalOpen(!isModalOpen)}
             >
               Request a Demo
@@ -52,7 +52,7 @@ export const Header = () => {
             )}
             <button
               type='submit'
-              className='mx-2 btn btn-success'
+              className='mx-2 btn btn-outline-info'
               onClick={() => setIsModalOpen(!isModalOpen)}
             >
               Free Trial

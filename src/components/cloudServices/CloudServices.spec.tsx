@@ -16,13 +16,23 @@ describe("CloudServices", () => {
 
   test("renders CloudServices component", () => {
     render(<CloudServices />);
-    expect(
-      screen.getByText(/Filter cloud services by provider/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/AWS/i)).toBeInTheDocument();
   });
 
   test("renders CloudServices component and fetches data", async () => {
-    const mockData = { clouds: [{ cloud_name: "test" }] };
+    const mockData = {
+      clouds: [
+        {
+          cloud_description: "Cloud Service 1 Description",
+          cloud_name: "Cloud Service 1",
+          geo_latitude: 40.7128,
+          geo_longitude: -74.006,
+          geo_region: "New York",
+          provider: "Provider 1",
+          provider_description: "Provider 1 Description",
+        },
+      ],
+    };
     fetchMock.mockResponseOnce(JSON.stringify(mockData));
 
     render(<CloudServices />);
@@ -34,8 +44,8 @@ describe("CloudServices", () => {
     expect(screen.getByText("List of Services")).toBeInTheDocument();
   });
 
-  const sortCloudServices = (services: any[], location: any) => {
-    return services.sort((a, b) => {
+  const sortCloudServices = async (services: any[], location: any) => {
+    const sortedServices = await services.sort((a, b) => {
       const distanceA = haversine(
         { latitude: a.geo_latitude, longitude: a.geo_longitude },
         location
@@ -44,14 +54,15 @@ describe("CloudServices", () => {
         { latitude: b.geo_latitude, longitude: b.geo_longitude },
         location
       );
-      return distanceA - distanceB;
+      return distanceB - distanceA;
     });
+    return sortedServices;
   };
 
-  test("sorts services based on distance from location", () => {
+  test("sorts services based on distance from location", async () => {
     const mockData = [
       {
-        cloud_description: "Cloud Service 1 Description",
+        cloud_description: "Cloud Service 1",
         cloud_name: "Cloud Service 1",
         geo_latitude: 40.7128,
         geo_longitude: -74.006,
@@ -60,7 +71,7 @@ describe("CloudServices", () => {
         provider_description: "Provider 1 Description",
       },
       {
-        cloud_description: "Cloud Service 2 Description",
+        cloud_description: "Cloud Service 2",
         cloud_name: "Cloud Service 2",
         geo_latitude: 34.0522,
         geo_longitude: -118.2437,
@@ -70,12 +81,13 @@ describe("CloudServices", () => {
       },
     ];
 
-    const sortedServices = sortCloudServices(mockData, {
+    const sortedServices = await sortCloudServices(mockData, {
       lat: 35.0522,
       lng: -119.2437,
     });
 
     expect(sortedServices[0]).toEqual(mockData[1]);
+    expect(sortedServices[1]).toEqual(mockData[0]);
   });
 
   const filterCloudProvider = (services: any[], provider: string) => {

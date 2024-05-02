@@ -57,11 +57,10 @@ const CloudServices = () => {
   const getCloudServices = async () => {
     const options = {
       method: "GET",
-      url: apiUrl,
       //signal: abortController.signal,
     };
     try {
-      const response = await fetch(options.url, options);
+      const response = await fetch(apiUrl, options);
       // Check if the response is ok
       if (!response.ok) {
         // If not, throw an error
