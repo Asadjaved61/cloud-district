@@ -2,14 +2,7 @@ import React, { useEffect } from "react";
 import "./Homepage.css";
 import CloudServices from "../../components/cloudServices/CloudServices";
 import Stats from "../../components/stats/Stats";
-import {
-  Link,
-  Button,
-  Element,
-  Events,
-  animateScroll as scroll,
-  scrollSpy,
-} from "react-scroll";
+import { Link, Events, animateScroll as scroll, scrollSpy } from "react-scroll";
 import { off } from "process";
 
 const Homepage = () => {

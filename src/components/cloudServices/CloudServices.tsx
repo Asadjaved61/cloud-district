@@ -34,9 +34,6 @@ const CloudServices = () => {
   );
   const [error, setError] = useState<string | null>(null);
 
-  // Create an AbortController instance outside of your effect
-  //const abortController = new AbortController();
-
   useEffect(() => {
     // Set the cloud providers from the imported data
     setCloudProviders(cloudProviders);
@@ -48,16 +45,11 @@ const CloudServices = () => {
       }
     }
     getCloudServices();
-    // Return a cleanup function that cancels the fetch request
-    return () => {
-      //abortController.abort();
-    };
   }, []);
 
   const getCloudServices = async () => {
     const options = {
       method: "GET",
-      //signal: abortController.signal,
     };
     try {
       const response = await fetch(apiUrl, options);
@@ -76,11 +68,6 @@ const CloudServices = () => {
         JSON.parse(localStorage.getItem(userLocationKey) || "")
       );
     } catch (e) {
-      // Ignore fetch errors if the fetch was cancelled
-      if ((e as Error).name === "AbortError") {
-        return;
-      }
-      // Log any errors to the console
       console.error(e as Error);
 
       // Set the error state
@@ -120,7 +107,7 @@ const CloudServices = () => {
 
   const locationError = () => {
     setLocationLoading(false);
-    alert("Sorry, no position available.");
+    alert("Sorry, geolocation not available.");
   };
 
   const sortCloudServices = async (
@@ -138,7 +125,6 @@ const CloudServices = () => {
       };
 
       const aDistance = haversine(location, aLocation);
-
       const bDistance = haversine(location, bLocation);
 
       return aDistance - bDistance;
@@ -148,37 +134,32 @@ const CloudServices = () => {
   };
 
   const filterCloudProvider = async (provider: CloudProvider) => {
-    let arrayCopy = [...(cloud_Providers ?? [])] as CloudProvider[];
-    // Set isActive property of all providers to false
-    arrayCopy.map((p) => {
-      p.isActive = false;
-    });
-    let filteredList: CloudServiceI[] = [];
-
-    if (!provider.isActive) {
-      let filteredList: CloudServiceI[] = [];
-      if (cloudServcies) {
-        // Filter the services based on the provider description
-        filteredList = await cloudServcies.filter((service) => {
-          return service.provider_description === provider.description;
-        });
+    // Update the isActive property of the selected provider
+    const updatedProviders = cloudProviders.map((p) => {
+      if (p.description === provider.description) {
+        p.isActive = !p.isActive;
+      } else {
+        p.isActive = false;
       }
-      setFilteredCloudServices(filteredList);
-      if (currentLocation) sortCloudServices(filteredList, currentLocation);
-    } else {
-      // If the provider is active, filter the services to exclude the ones with the provider description
-      filteredList =
-        (await (cloudServcies ?? []).filter((service) => {
-          return service.provider_description !== provider.description;
-        })) ?? [];
-      setFilteredCloudServices(filteredList);
-      // If there is a current location, sort the services based on the location
-      if (currentLocation) sortCloudServices(filteredList, currentLocation!);
-    }
-    arrayCopy.find((p) => p.description === provider.description)!.isActive =
-      !provider.isActive;
+      return p;
+    });
+    setCloudProviders(updatedProviders);
 
-    setCloudProviders(arrayCopy);
+    // Filter the services based on the isActive property of the provider
+    const filteredServices = cloudServcies
+      ? await cloudServcies.filter((service) => {
+          return provider.isActive
+            ? service.provider_description === provider.description
+            : service.provider_description !== provider.description;
+        })
+      : [];
+
+    setFilteredCloudServices(filteredServices);
+
+    // If there is a current location, sort the services based on the location
+    if (currentLocation) {
+      sortCloudServices(filteredServices, currentLocation);
+    }
   };
 
   return (
@@ -194,7 +175,7 @@ const CloudServices = () => {
                   key={index}
                 >
                   <button
-                    className={`btn btn-outline-dark btn-lg ${
+                    className={`btn btn-outline-dark ${
                       provider.isActive && "active"
                     }`}
                   >
